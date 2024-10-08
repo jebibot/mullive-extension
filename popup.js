@@ -44,6 +44,21 @@
         current = `a:${parts[3]}`;
       }
       break;
+    case "ch.sooplive.co.kr":
+    case "play.sooplive.co.kr":
+      if (/^[a-z0-9]{3,12}$/i.test(parts[1])) {
+        current = `s:${parts[1]}`;
+      }
+      break;
+    case "m.sooplive.co.kr":
+      if (
+        parts[1] === "#" &&
+        parts[2] === "player" &&
+        /^[a-z0-9]{3,12}$/i.test(parts[3])
+      ) {
+        current = `s:${parts[3]}`;
+      }
+      break;
     case "www.youtube.com":
     case "m.youtube.com":
       if (
