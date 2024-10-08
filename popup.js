@@ -26,7 +26,7 @@
     case "www.twitch.tv":
     case "m.twitch.tv":
       if (/^[a-z0-9_]{4,25}$/i.test(parts[1])) {
-        current = parts[1];
+        current = `t:${parts[1]}`;
       }
       break;
     case "bj.afreecatv.com":
