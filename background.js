@@ -32,6 +32,19 @@ const COOKIES = [
 ];
 const partitionKey = { topLevelSite: "https://mul.live" };
 
+const init = async () => {
+  const granted = await checkPermission();
+  if (!granted) {
+    return;
+  }
+  for (const { name, url } of COOKIES) {
+    const cookie = await chrome.cookies.get({ name, url });
+    if (cookie != null) {
+      await setPartitonedCookie(cookie, url);
+    }
+  }
+};
+
 const checkPermission = async () => {
   const granted = await chrome.permissions.contains({
     origins: [
@@ -65,19 +78,8 @@ const setPartitonedCookie = async (cookie, url) => {
   });
 };
 
-chrome.runtime.onInstalled.addListener(checkPermission);
-chrome.runtime.onStartup.addListener(async () => {
-  const granted = await checkPermission();
-  if (!granted) {
-    return;
-  }
-  for (const { name, url } of COOKIES) {
-    const cookie = await chrome.cookies.get({ name, url });
-    if (cookie != null) {
-      await setPartitonedCookie(cookie, url);
-    }
-  }
-});
+chrome.runtime.onInstalled.addListener(init);
+chrome.runtime.onStartup.addListener(init);
 
 chrome.permissions.onRemoved.addListener(checkPermission);
 
@@ -92,14 +94,10 @@ chrome.cookies.onChanged.addListener(async ({ cookie, removed }) => {
   if (removed) {
     return;
   }
-  for (const { name, domain, url } of COOKIES) {
-    if (
-      cookie.name === name &&
-      cookie.domain === domain &&
-      cookie.partitionKey == null
-    ) {
-      await setPartitonedCookie(cookie, url);
-      break;
-    }
+  const c = COOKIES.find(
+    ({ name, domain }) => cookie.name === name && cookie.domain === domain
+  );
+  if (c != null) {
+    await setPartitonedCookie(cookie, c.url);
   }
 });
