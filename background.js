@@ -19,6 +19,11 @@ const COOKIES = [
     domain: ".sooplive.co.kr",
     url: "https://login.sooplive.co.kr/app/LoginAction.php",
   },
+  {
+    name: "isBbs",
+    domain: ".sooplive.co.kr",
+    url: "https://login.sooplive.co.kr/app/LoginAction.php",
+  },
 ];
 const partitionKey = { topLevelSite: "https://mul.live" };
 
