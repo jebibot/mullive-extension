@@ -25,8 +25,14 @@
     while (fiber != null) {
       let state = fiber.memoizedState;
       while (state != null) {
-        if (state.memoizedState != null && criteria(state.memoizedState)) {
-          return raw ? state : state.memoizedState;
+        let value = state.memoizedState;
+        if (state.queue?.pending?.hasEagerState) {
+          value = state.queue.pending.eagerState;
+        } else if (state.baseQueue?.hasEagerState) {
+          value = state.baseQueue.eagerState;
+        }
+        if (value != null && criteria(value)) {
+          return raw ? state : value;
         }
         state = state.next;
       }
@@ -37,15 +43,22 @@
   const root = document.getElementById("root");
   const waiting = [];
   const rootObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((n) => {
+    if (!waiting.length) {
+      return;
+    }
+    for (const mutation of mutations) {
+      for (const n of mutation.addedNodes) {
+        if (n.querySelector == null) {
+          continue;
+        }
         for (const elem of waiting) {
-          if (n.querySelector?.(elem.query)) {
-            elem.resolve(n);
+          const node = n.querySelector(elem.query);
+          if (node != null) {
+            elem.resolve(node);
           }
         }
-      });
-    });
+      }
+    }
   });
   const waitFor = (query) => {
     const node = root.querySelector(query);
@@ -68,14 +81,9 @@
       if (node == null) {
         return;
       }
-      const features = [];
       if (node.className.startsWith("live_")) {
-        features.push(initPlayerFeatures(node, true));
-        features.push(attachLiveObserver(node));
-      } else if (node.className.startsWith("vod_")) {
-        features.push(initPlayerFeatures(node, false));
+        return attachLiveObserver(node);
       }
-      return Promise.all(features);
     };
 
     const layoutBody = await waitFor("#layout-body");
@@ -83,15 +91,46 @@
       return;
     }
     const layoutBodyObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((n) => {
-          init(n.tagName === "SECTION" ? n : n.querySelector("section"));
-        });
-      });
+      for (const mutation of mutations) {
+        for (const n of mutation.addedNodes) {
+          if (n.querySelector != null) {
+            init(n.tagName === "SECTION" ? n : n.querySelector("section"));
+          }
+        }
+      }
     });
     layoutBodyObserver.observe(layoutBody, { childList: true });
 
     await init(layoutBody.querySelector("section"));
+  };
+
+  const attachPlayerObserver = async (node, isLive, tries = 0) => {
+    if (node == null) {
+      return;
+    }
+    const playerLayout = node.querySelector(
+      isLive ? "#live_player_layout" : "#player_layout"
+    );
+    if (playerLayout == null) {
+      if (tries > 500) {
+        return;
+      }
+      return new Promise((r) => setTimeout(r, 50)).then(() =>
+        attachPlayerObserver(node, isLive, tries + 1)
+      );
+    }
+    const playerObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const n of mutation.addedNodes) {
+          if (n.querySelector != null) {
+            initPlayerFeatures(n, isLive);
+          }
+        }
+      }
+    });
+    playerObserver.observe(playerLayout.parentNode, { childList: true });
+
+    await initPlayerFeatures(playerLayout, isLive);
   };
 
   const initPlayerFeatures = async (node, isLive) => {
@@ -99,9 +138,7 @@
       return;
     }
     const setLiveWide = await findReactState(
-      isLive
-        ? node.querySelector('[class^="live_information_player__"]')
-        : node.querySelector("section"),
+      node,
       (state) =>
         state[0]?.length === 1 &&
         state[1]?.length === 2 &&
@@ -110,7 +147,7 @@
     setLiveWide?.[0](true);
   };
 
-  const initChatFeatures = (chattingContainer) => {
+  const initChatFeatures = async (chattingContainer) => {
     if (chattingContainer == null) {
       return;
     }
@@ -127,18 +164,43 @@
     if (node == null) {
       return;
     }
-    const liveObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((n) => {
-          initChatFeatures(
-            n.tagName === "ASIDE" ? n : n.querySelector("aside")
-          );
-        });
+    const wrapper = node.querySelector('[class^="live_wrapper__"]');
+    if (wrapper != null) {
+      const liveObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          for (const n of mutation.addedNodes) {
+            if (n.tagName === "ASIDE") {
+              initChatFeatures(n);
+            }
+          }
+        }
       });
-    });
-    liveObserver.observe(node, { childList: true });
+      liveObserver.observe(wrapper, { childList: true });
+    }
 
-    initChatFeatures(node.querySelector("aside"));
+    const player = node.querySelector('[class^="live_information_player__"]');
+    if (player != null) {
+      const playerObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          for (const n of mutation.addedNodes) {
+            if (
+              n.className?.startsWith?.("live_information_video_container__")
+            ) {
+              attachPlayerObserver(n, true);
+            }
+          }
+        }
+      });
+      playerObserver.observe(player, { childList: true });
+    }
+
+    return Promise.all([
+      attachPlayerObserver(
+        node.querySelector('[class^="live_information_video_container__"]'),
+        true
+      ),
+      initChatFeatures(node.querySelector("aside")),
+    ]);
   };
 
   (async () => {
