@@ -26,13 +26,13 @@
     case "www.twitch.tv":
     case "m.twitch.tv":
       if (/^[a-z0-9_]{4,25}$/i.test(parts[1])) {
-        current = parts[1];
+        current = `t:${parts[1]}`;
       }
       break;
     case "ch.sooplive.co.kr":
     case "play.sooplive.co.kr":
       if (/^[a-z0-9]{3,12}$/i.test(parts[1])) {
-        current = `s:${parts[1]}`;
+        current = parts[1];
       }
       break;
     case "m.sooplive.co.kr":
@@ -41,7 +41,7 @@
         parts[2] === "player" &&
         /^[a-z0-9]{3,12}$/i.test(parts[3])
       ) {
-        current = `s:${parts[3]}`;
+        current = parts[3];
       }
       break;
     case "www.youtube.com":
