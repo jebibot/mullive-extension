@@ -15,8 +15,8 @@ body {
 #streams {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 #streams div {
@@ -39,6 +39,10 @@ body {
 
 #streams button:hover {
   background-color: #d6d6d6;
+}
+
+#streams .handle {
+  cursor: move;
 }
 
 #watch {

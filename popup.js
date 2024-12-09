@@ -64,7 +64,7 @@
   }
 
   let { streams } = await chrome.storage.local.get({ streams: [] });
-  const streamsSet = new Set(streams);
+  let streamsSet = new Set(streams);
   if (current) {
     streamsSet.add(current);
     await chrome.storage.local.set({ streams: [...streamsSet] });
@@ -73,7 +73,13 @@
   const list = document.getElementById("streams");
   for (const s of streamsSet) {
     const item = document.createElement("div");
+    item.dataset.id = s;
     list.appendChild(item);
+
+    const move = document.createElement("button");
+    move.textContent = "⠿";
+    move.classList.add("handle");
+    item.appendChild(move);
 
     const span = document.createElement("span");
     span.textContent = s;
@@ -93,5 +99,16 @@
     chrome.tabs.create({
       url: `https://mul.live/${[...streamsSet].join("/")}`,
     });
+  });
+
+  Sortable.create(list, {
+    animation: 150,
+    handle: ".handle",
+    store: {
+      set(sortable) {
+        streamsSet = new Set(sortable.toArray());
+        chrome.storage.local.set({ streams: [...streamsSet] });
+      },
+    },
   });
 })();
