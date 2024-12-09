@@ -43,6 +43,17 @@
         "*://chzzk.naver.com/*"
       ],
       "world": "MAIN"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "soop.js"
+      ],
+      "matches": [
+        "*://play.sooplive.co.kr/*"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
     }
   ],
   "declarative_net_request": {
