@@ -23,7 +23,6 @@
   ],
   "host_permissions": [
     "*://*.naver.com/*",
-    "*://*.afreecatv.com/*",
     "*://*.sooplive.co.kr/*",
     "*://*.mul.live/*"
   ],

@@ -10,16 +10,6 @@ const COOKIES = [
     url: "https://nid.naver.com/nidlogin.login",
   },
   {
-    name: "PdboxTicket",
-    domain: ".afreecatv.com",
-    url: "https://login.afreecatv.com/app/LoginAction.php",
-  },
-  {
-    name: "PdboxUser",
-    domain: ".afreecatv.com",
-    url: "https://login.afreecatv.com/app/LoginAction.php",
-  },
-  {
     name: "AuthTicket",
     domain: ".sooplive.co.kr",
     url: "https://login.sooplive.co.kr/app/LoginAction.php",
@@ -51,7 +41,6 @@ const checkPermission = async () => {
       "*://*.mul.live/*",
       "*://*.naver.com/*",
       "*://*.chzzk.naver.com/*",
-      "*://*.afreecatv.com/*",
       "*://*.sooplive.co.kr/*",
     ],
   });

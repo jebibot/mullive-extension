@@ -5,7 +5,6 @@ document.getElementById("grant").addEventListener("click", () => {
         "*://*.mul.live/*",
         "*://*.naver.com/*",
         "*://*.chzzk.naver.com/*",
-        "*://*.afreecatv.com/*",
         "*://*.sooplive.co.kr/*",
       ],
     })

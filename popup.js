@@ -29,21 +29,6 @@
         current = parts[1];
       }
       break;
-    case "bj.afreecatv.com":
-    case "play.afreecatv.com":
-      if (/^[a-z0-9]{3,12}$/i.test(parts[1])) {
-        current = `a:${parts[1]}`;
-      }
-      break;
-    case "m.afreecatv.com":
-      if (
-        parts[1] === "#" &&
-        parts[2] === "player" &&
-        /^[a-z0-9]{3,12}$/i.test(parts[3])
-      ) {
-        current = `a:${parts[3]}`;
-      }
-      break;
     case "ch.sooplive.co.kr":
     case "play.sooplive.co.kr":
       if (/^[a-z0-9]{3,12}$/i.test(parts[1])) {
