@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "x-has-extension",
+          "operation": "set",
+          "value": "1"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "||mul.live",
+      "resourceTypes": ["main_frame"]
+    }
+  }
+]

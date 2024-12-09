@@ -19,6 +19,7 @@
   "permissions": [
     "activeTab",
     "cookies",
+    "declarativeNetRequestWithHostAccess",
     "storage"
   ],
   "host_permissions": [
@@ -55,5 +56,14 @@
         "*://api.chzzk.naver.com/*"
       ]
     }
-  ]
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
 }
