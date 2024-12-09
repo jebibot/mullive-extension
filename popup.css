@@ -15,12 +15,12 @@ body {
 #streams {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
 }
 
 #streams div {
   display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 #streams span {
