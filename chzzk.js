@@ -1,4 +1,9 @@
 (() => {
+  try {
+    window.top.location.hostname;
+    return;
+  } catch {}
+
   const getReactFiber = (node) => {
     if (node == null) {
       return;

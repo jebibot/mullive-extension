@@ -30,16 +30,6 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "web/*"
-      ],
-      "matches": [
-        "*://*.chzzk.naver.com/*"
-      ]
-    }
-  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -47,14 +37,12 @@
     {
       "all_frames": true,
       "js": [
-        "content.js"
+        "chzzk.js"
       ],
       "matches": [
-        "*://*.chzzk.naver.com/*"
+        "*://chzzk.naver.com/*"
       ],
-      "exclude_globs": [
-        "*://api.chzzk.naver.com/*"
-      ]
+      "world": "MAIN"
     }
   ],
   "declarative_net_request": {
