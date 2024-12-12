@@ -15,8 +15,7 @@ try {
   const params = new URLSearchParams(location.search);
   if (params.get("vtype") === "chat") {
     if (window.opener == null) {
-      const path = location.pathname.split("/");
-      window.opener = window.parent[path[1]];
+      window.opener = window.parent[location.pathname.split("/")[1]];
 
       window.addEventListener("DOMContentLoaded", () => {
         const modal = document.getElementById("modal");
