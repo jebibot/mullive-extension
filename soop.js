@@ -32,7 +32,7 @@ try {
                   "_blank"
                 );
                 window.parent.postMessage(
-                  { type: "showRefreshOverlay" },
+                  { cmd: "showRefreshOverlay" },
                   "https://mul.live"
                 );
                 return;
