@@ -17,6 +17,8 @@ try {
     if (window.opener == null) {
       window.opener = window.parent[location.pathname.split("/")[1]];
 
+      document.documentElement.setAttribute("dark", "true");
+
       window.addEventListener("DOMContentLoaded", () => {
         const modal = document.getElementById("modal");
         if (modal == null) {
