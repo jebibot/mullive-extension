@@ -47,15 +47,19 @@ jobs:
       - name: Build
         run: npm run build
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: extension
-          path: extension.zip
+      - name: Publish extension
+        run: npm run publish
+        env:
+          CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          EXTENSION_ID: ${{ secrets.CHROME_APP_ID }}
 
       - name: Build Firefox
         run: npm run build:firefox
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: manifest
-          path: dist/manifest.json
+      - name: Publish Firefox add-on
+        run: npm run publish:firefox
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.WEB_EXT_API_SECRET }}
