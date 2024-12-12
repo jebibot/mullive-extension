@@ -1,6 +1,6 @@
 (() => {
   try {
-    window.top.location.hostname;
+    window.parent.location.hostname;
     return;
   } catch {}
 

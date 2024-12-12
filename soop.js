@@ -1,5 +1,5 @@
 try {
-  window.top.location.hostname;
+  window.parent.location.hostname;
 } catch {
   const style = document.createElement("style");
   style.textContent = `
@@ -16,7 +16,7 @@ try {
   if (params.get("vtype") === "chat") {
     if (window.opener == null) {
       const path = location.pathname.split("/");
-      window.opener = window.top[path[1]];
+      window.opener = window.parent[path[1]];
     }
   }
 }
