@@ -52,7 +52,7 @@
         (parts[1] === "embed" && /^[a-zA-Z0-9_\-]{11}$/.test(parts[2]))
       ) {
         current = `y:${parts[2]}`;
-      } else if (/^@[a-zA-Z0-9_\-]{3,30}$/.test(parts[1])) {
+      } else if (/^@[a-zA-Z0-9_\-.%]{3,270}$/.test(parts[1])) {
         current = `y:${parts[1]}`;
       } else if (parts[1] === "watch") {
         const id = parsedUrl.searchParams.get("v");
