@@ -17,6 +17,31 @@ try {
     if (window.opener == null) {
       const path = location.pathname.split("/");
       window.opener = window.parent[path[1]];
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById("modal");
+        if (modal == null) {
+          return;
+        }
+        const modalObserver = new MutationObserver((mutations) => {
+          for (const mutation of mutations) {
+            for (const n of mutation.addedNodes) {
+              if (n.querySelector?.("#layerLogin")) {
+                window.open(
+                  "https://login.sooplive.co.kr/afreeca/login.php",
+                  "_blank"
+                );
+                window.parent.postMessage(
+                  { type: "showRefreshOverlay" },
+                  "https://mul.live"
+                );
+                return;
+              }
+            }
+          }
+        });
+        modalObserver.observe(modal, { childList: true });
+      });
     }
   }
 }
