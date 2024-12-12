@@ -1,6 +1,6 @@
 {
   "name": "mullive",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "현재 보고 있는 방송을 Mul.Live에서 함께 봅니다.",
   "private": true,
   "scripts": {
