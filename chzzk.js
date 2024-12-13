@@ -127,7 +127,7 @@
     const playerObserver = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
         for (const n of mutation.addedNodes) {
-          if (n.querySelector != null) {
+          if (!n.className.startsWith("pip_player_")) {
             initPlayerFeatures(n, isLive);
           }
         }
