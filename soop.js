@@ -7,6 +7,10 @@ try {
   display: none !important;
 }
 
+.embeded_mode #webplayer #player div.quality_box {
+  display: block !important;
+}
+
 .popout_chat #chatting_area {
   min-width: auto !important;
 }`;
