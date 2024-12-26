@@ -20,7 +20,8 @@
     "activeTab",
     "cookies",
     "declarativeNetRequestWithHostAccess",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "host_permissions": [
     "*://*.naver.com/*",
