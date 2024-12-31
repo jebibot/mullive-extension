@@ -19,7 +19,8 @@ try {
   const params = new URLSearchParams(location.search);
   if (params.get("vtype") === "chat") {
     if (window.opener == null) {
-      window.opener = window.parent[location.pathname.split("/")[1]];
+      const id = location.pathname.split("/")[1];
+      window.opener = window.parent[isNaN(Number(id)) ? id : `#${id}`];
 
       document.documentElement.setAttribute("dark", "true");
 
