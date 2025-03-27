@@ -142,14 +142,11 @@
     if (node == null) {
       return;
     }
-    const setLiveWide = await findReactState(
+    const liveWide = await findReactState(
       node,
-      (state) =>
-        state[0]?.length === 1 &&
-        state[1]?.length === 2 &&
-        state[1]?.[1]?.key === "isLiveWide"
+      (state) => state.length === 3 && state[2]?.toString?.() === "atom7"
     );
-    setLiveWide?.[0](true);
+    liveWide?.[1].set(liveWide[2], true);
   };
 
   const initChatFeatures = async (chattingContainer) => {
