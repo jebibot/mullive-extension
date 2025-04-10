@@ -82,17 +82,17 @@
           const res = await fetch(
             `https://st.sooplive.co.kr/api/get_station_status.php?szBjId=${s}`
           );
-          const data = await res.json();
-          if (res.ok && data.RESULT === 1 && data.DATA?.user_nick) {
-            nick = data.DATA.user_nick;
+          const result = await res.json();
+          if (res.ok && result.RESULT === 1 && result.DATA?.user_nick) {
+            nick = result.DATA.user_nick;
           }
         } else if (/^[0-9a-f]{32}$/i.test(s)) {
           const res = await fetch(
             `https://api.chzzk.naver.com/service/v1/channels/${s}`
           );
-          const data = await res.json();
-          if (res.ok && data.code === 200 && data.content?.channelName) {
-            nick = data.content.channelName;
+          const result = await res.json();
+          if (res.ok && result.code === 200 && result.content?.channelName) {
+            nick = result.content.channelName;
           }
         }
       } catch {}
