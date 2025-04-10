@@ -1,5 +1,5 @@
 body {
-  width: 250px;
+  width: 280px;
   margin: 0;
   padding: 1rem;
   overflow-x: hidden;
@@ -28,6 +28,14 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+#streams input {
+  margin: 0;
+}
+
+#streams input:not(:checked) + span {
+  color: gray;
 }
 
 #streams button {

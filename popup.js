@@ -112,6 +112,16 @@
     move.classList.add("handle");
     item.appendChild(move);
 
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = !data[s]?.disabled;
+    checkbox.addEventListener("change", async (e) => {
+      data[s] ||= {};
+      data[s].disabled = !e.currentTarget.checked;
+      await chrome.storage.local.set({ data });
+    });
+    item.appendChild(checkbox);
+
     const span = document.createElement("span");
     span.textContent = nick ? `${nick} (${s})` : s;
     item.appendChild(span);
@@ -129,7 +139,9 @@
 
   document.getElementById("watch").addEventListener("click", () => {
     chrome.tabs.create({
-      url: `https://mul.live/${[...streamsSet].join("/")}`,
+      url: `https://mul.live/${[...streamsSet]
+        .filter((s) => !data[s]?.disabled)
+        .join("/")}`,
     });
   });
 
