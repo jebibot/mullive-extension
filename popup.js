@@ -63,7 +63,10 @@
       break;
   }
 
-  let { streams } = await chrome.storage.local.get({ streams: [] });
+  let { streams, data } = await chrome.storage.local.get({
+    streams: [],
+    data: {},
+  });
   let streamsSet = new Set(streams);
   if (current) {
     streamsSet.add(current);
@@ -72,6 +75,34 @@
 
   const list = document.getElementById("streams");
   for (const s of streamsSet) {
+    let nick = data[s]?.nick;
+    if (!nick) {
+      try {
+        if (/^[a-z0-9]{3,12}$/i.test(s)) {
+          const res = await fetch(
+            `https://st.sooplive.co.kr/api/get_station_status.php?szBjId=${s}`
+          );
+          const data = await res.json();
+          if (res.ok && data.RESULT === 1 && data.DATA?.user_nick) {
+            nick = data.DATA.user_nick;
+          }
+        } else if (/^[0-9a-f]{32}$/i.test(s)) {
+          const res = await fetch(
+            `https://api.chzzk.naver.com/service/v1/channels/${s}`
+          );
+          const data = await res.json();
+          if (res.ok && data.code === 200 && data.content?.channelName) {
+            nick = data.content.channelName;
+          }
+        }
+      } catch {}
+      if (nick) {
+        data[s] ||= {};
+        data[s].nick = nick;
+        await chrome.storage.local.set({ data });
+      }
+    }
+
     const item = document.createElement("div");
     item.dataset.id = s;
     list.appendChild(item);
@@ -82,14 +113,15 @@
     item.appendChild(move);
 
     const span = document.createElement("span");
-    span.textContent = s;
+    span.textContent = nick ? `${nick} (${s})` : s;
     item.appendChild(span);
 
     const remove = document.createElement("button");
     remove.textContent = "X";
     remove.addEventListener("click", async () => {
       streamsSet.delete(s);
-      await chrome.storage.local.set({ streams: [...streamsSet] });
+      delete data[s];
+      await chrome.storage.local.set({ streams: [...streamsSet], data });
       item.remove();
     });
     item.appendChild(remove);
