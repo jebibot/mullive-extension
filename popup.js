@@ -29,6 +29,11 @@
         current = `t:${parts[1]}`;
       }
       break;
+    case "www.sooplive.co.kr":
+      if (parts[1] === "station" && /^[a-z0-9]{3,12}$/i.test(parts[2])) {
+        current = parts[2];
+      }
+      break;
     case "ch.sooplive.co.kr":
     case "play.sooplive.co.kr":
       if (/^[a-z0-9]{3,12}$/i.test(parts[1])) {
@@ -95,7 +100,7 @@
             nick = result.content.channelName;
           }
         }
-      } catch {}
+      } catch { }
       if (nick) {
         data[s] ||= {};
         data[s].nick = nick;
