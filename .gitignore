@@ -130,5 +130,7 @@ dist
 .pnp.*
 
 *.zip
+*.crx
+*.pem
 dist
 _metadata
