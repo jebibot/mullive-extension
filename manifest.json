@@ -4,9 +4,10 @@
   "short_name": "Mul.Live",
   "version": "3.2.1",
   "description": "현재 보고 있는 방송을 Mul.Live에서 함께 봅니다.",
-  "minimum_chrome_version": "119",
+  "minimum_chrome_version": "121",
   "browser_specific_settings": {
     "gecko": {
+      "strict_min_version": "121.0",
       "id": "ext@mul.live"
     }
   },
@@ -31,6 +32,9 @@
     "default_popup": "popup.html"
   },
   "background": {
+    "scripts": [
+      "background.js"
+    ],
     "service_worker": "background.js"
   },
   "content_scripts": [
