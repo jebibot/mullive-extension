@@ -100,7 +100,7 @@
             nick = result.content.channelName;
           }
         }
-      } catch { }
+      } catch {}
       if (nick) {
         data[s] ||= {};
         data[s].nick = nick;
