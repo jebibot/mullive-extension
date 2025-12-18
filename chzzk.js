@@ -57,7 +57,7 @@
           continue;
         }
         for (const elem of waiting) {
-          const node = n.querySelector(elem.query);
+          const node = n.matches(elem.query) && n || n.querySelector(elem.query);
           if (node != null) {
             elem.resolve(node);
           }
@@ -153,13 +153,15 @@
     if (chattingContainer == null) {
       return;
     }
-    setTimeout(() => {
+    const foldChat = () => {
       chattingContainer
         .querySelector(
           '[class*="live_chatting_header_fold__"] > [class^="live_chatting_header_button__"]'
         )
         ?.click();
-    }, 300);
+    };
+    setTimeout(foldChat, 300);
+    setTimeout(foldChat, 2000);
   };
 
   const attachLiveObserver = (node) => {
