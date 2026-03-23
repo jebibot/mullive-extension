@@ -11,18 +11,18 @@ const COOKIES = [
   },
   {
     name: "AuthTicket",
-    domain: ".sooplive.co.kr",
-    url: "https://login.sooplive.co.kr/app/LoginAction.php",
+    domain: ".sooplive.com",
+    url: "https://login.sooplive.com/app/LoginAction.php",
   },
   {
     name: "UserTicket",
-    domain: ".sooplive.co.kr",
-    url: "https://login.sooplive.co.kr/app/LoginAction.php",
+    domain: ".sooplive.com",
+    url: "https://login.sooplive.com/app/LoginAction.php",
   },
   {
     name: "isBbs",
-    domain: ".sooplive.co.kr",
-    url: "https://login.sooplive.co.kr/app/LoginAction.php",
+    domain: ".sooplive.com",
+    url: "https://login.sooplive.com/app/LoginAction.php",
   },
 ];
 const partitionKey = { topLevelSite: "https://mul.live" };
@@ -46,7 +46,7 @@ const checkPermission = async () => {
       "*://*.mul.live/*",
       "*://*.naver.com/*",
       "*://*.chzzk.naver.com/*",
-      "*://*.sooplive.co.kr/*",
+      "*://*.sooplive.com/*",
     ],
   });
   if (!granted) {

@@ -25,7 +25,7 @@
   ],
   "host_permissions": [
     "*://*.naver.com/*",
-    "*://*.sooplive.co.kr/*",
+    "*://*.sooplive.com/*",
     "*://*.mul.live/*"
   ],
   "action": {
@@ -54,7 +54,7 @@
         "soop.js"
       ],
       "matches": [
-        "*://play.sooplive.co.kr/*"
+        "*://play.sooplive.com/*"
       ],
       "run_at": "document_start",
       "world": "MAIN"

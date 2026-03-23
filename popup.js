@@ -29,18 +29,18 @@
         current = `t:${parts[1]}`;
       }
       break;
-    case "www.sooplive.co.kr":
+    case "www.sooplive.com":
       if (parts[1] === "station" && /^[a-z0-9]{3,12}$/i.test(parts[2])) {
         current = parts[2];
       }
       break;
-    case "ch.sooplive.co.kr":
-    case "play.sooplive.co.kr":
+    case "ch.sooplive.com":
+    case "play.sooplive.com":
       if (/^[a-z0-9]{3,12}$/i.test(parts[1])) {
         current = parts[1];
       }
       break;
-    case "m.sooplive.co.kr":
+    case "m.sooplive.com":
       if (
         parts[1] === "#" &&
         parts[2] === "player" &&
@@ -85,7 +85,7 @@
       try {
         if (/^[a-z0-9]{3,12}$/i.test(s)) {
           const res = await fetch(
-            `https://st.sooplive.co.kr/api/get_station_status.php?szBjId=${s}`
+            `https://st.sooplive.com/api/get_station_status.php?szBjId=${s}`
           );
           const result = await res.json();
           if (res.ok && result.RESULT === 1 && result.DATA?.user_nick) {

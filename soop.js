@@ -34,7 +34,7 @@ try {
             for (const n of mutation.addedNodes) {
               if (n.querySelector?.("#layerLogin")) {
                 window.open(
-                  "https://login.sooplive.co.kr/afreeca/login.php",
+                  "https://login.sooplive.com/afreeca/login.php",
                   "_blank"
                 );
                 window.parent.postMessage(
