@@ -16,5 +16,24 @@
       "urlFilter": "||mul.live",
       "resourceTypes": ["main_frame"]
     }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "responseHeaders": [
+        {
+          "header": "content-security-policy",
+          "operation": "set",
+          "value": "frame-ancestors 'self' https://naver.com https://*.naver.com https://mul.live"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "|https://chzzk.naver.com/live/",
+      "initiatorDomains": ["mul.live"],
+      "resourceTypes": ["sub_frame"]
+    }
   }
 ]
